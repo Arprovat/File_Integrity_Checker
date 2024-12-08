@@ -12,7 +12,7 @@ try {
         })   
     }
     const tokenInfo = await GetUserByToken(req.cookie.token);
-   const user = await User.findById(tokenInfo.User_id)
+   const user = await User.findById(tokenInfo._id)
 
  const FileHash = await CreateFileHash(req.file.path)
   const FileData= await FileModel.create({
