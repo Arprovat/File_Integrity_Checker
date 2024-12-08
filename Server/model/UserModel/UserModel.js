@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     files:[
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'File',
+            ref: 'FileModel',
         }
     ]
 },{
