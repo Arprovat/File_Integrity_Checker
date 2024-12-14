@@ -8,8 +8,8 @@ const Navber = () => {
         <div className='flex  justify-between items-center  h-14 '>
       
                 <div className="text-3xl  font-bold ">
-                
-                    <p className="bg-gradient-to-r flex justify-center items-center from-rose-950 via-rose-800 to-rose-900 bg-clip-text text-transparent hover:to-rose-950 hover:via-rose-800 hover:from-rose-900">Check <LuFileCheck2 className='text-rose-900 hover:text-rose-800'/>Integrity</p>
+                <Link to='/'>
+                <p className="bg-gradient-to-r flex justify-center items-center from-rose-950 via-rose-800 to-rose-900 bg-clip-text text-transparent hover:to-rose-950 hover:via-rose-800 hover:from-rose-900">Check <LuFileCheck2 className='text-rose-900 hover:text-rose-800'/>Integrity</p></Link>
                 </div>
           
 
