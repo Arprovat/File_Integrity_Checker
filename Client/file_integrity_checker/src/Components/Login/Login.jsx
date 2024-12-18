@@ -1,14 +1,24 @@
 import { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import login from '../../assets/login.jpg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Implement login logic here
+    const payload ={
+       email,
+      password
+    }
+const result = await axios.post('http://localhost:8008/api/login',payload,{withCredentials:true})
+console.log(result)
+if(result.data.success){
+navigate('/main/postAndCheck')
+}
     console.log('Login attempt:', { email, password });
   };
 
@@ -51,7 +61,7 @@ const Login = () => {
               >
                 Login
               </button>
-            </form>
+            </form >
             <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
               <a href="#" className="hover:underline">Forgot your password?</a>
             </div>
