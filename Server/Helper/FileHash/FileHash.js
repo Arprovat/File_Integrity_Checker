@@ -1,15 +1,23 @@
 const crypto = require('crypto');
-const CreateFileHash= (Path)=>{
-    return new Promise((resolve, reject) =>{
-        const hash = crypto.createHash('sha256');
-        const stream = fs.createReadStream(Path);
+const fs = require('fs/promises'); // Import fs.promises
+const path = require('path');
 
-        stream.on('data',(chunk)=>{
-            hash.update(chunk);
-        });
-        stream.on('end',()=>{resolve(hash.digest('hex'));});
-        stream.on('error',(err)=>{reject(err);});
+const CreateFileHash = async (filePath) => {
+  try {
+    const absolutePath = path.join(__dirname, '../../File_store', filePath); // Construct absolute path
+    // Check if file exists
+    await fs.access(absolutePath, fs.constants.F_OK);
 
-    })
-}
+    const fileBuffer = await fs.readFile(absolutePath);
+    const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+    return hash;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error(`File not found: ${filePath}`);
+    }
+    // Re-throw other errors
+    throw error;
+  }
+};
+
 module.exports = CreateFileHash;

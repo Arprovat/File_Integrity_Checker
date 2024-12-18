@@ -1,28 +1,33 @@
 const GetUserByToken = require("../Helper/GetUserByToken/GetUserByToken");
 const User = require("../model/UserModel/UserModel");
-const fileModel = require("../model/FileModel/FileModel");
 const FileModel = require("../model/FileModel/FileModel");
 const CreateFileHash = require("../Helper/FileHash/FileHash");
 
 const FileUploadhandler =async(req,res)=>{
 try {
-    if(!req.File){
+    console.log(req.file)
+    if(!req.file){
         return res.status(400).json({
             message: "file not uploaded yet",
         })   
     }
-    const tokenInfo = await GetUserByToken(req.cookie.token);
-   const user = await User.findById(tokenInfo._id)
-
- const FileHash = await CreateFileHash(req.file.path)
+    console.log(req.cookies.token)
+    const tokenInfo = await GetUserByToken(req.cookies.token);
+    console.log('token info',tokenInfo)
+  
+ const FileHash = await CreateFileHash(req.file.filename)
   const FileData= await FileModel.create({
-       User_id: user._id,
-       filename: req.File.filename,
-       filePath: req.File.path,
+       User_id: tokenInfo._id,
+       fileDetails:{
+        name:req.file.filename,
+        size: req.file.size,
+        type: req.file.mimetype
+       } ,
        fileHash: FileHash
    })
-   User.files.push(FileData._id);
-   await user.save();
+   console.log('file',FileData)
+   
+   await User.findByIdAndUpdate(tokenInfo._id, { $push: { files: FileData._id } });
 
    return res.status(200).json({
     message:"successfully file uploaded ",

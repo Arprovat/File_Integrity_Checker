@@ -6,15 +6,24 @@ const fileSchema = new schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    fileName: {
-        type: 'string',
-        required: true
+    fileDetails: {
+       name:{
+        type: String,
+        required: true,
+        default: '',
+       },
+       size:{
+        type: Number,
+        required: true,
+       },
+       _type: {
+        type: String,
+        default: '',
+       }
     } ,
-    filePath:{
-type: 'string',
-    },
+    
     fileHash:{
-        type: 'string',
+        type: String,
     }
 },{
 timestamps: true

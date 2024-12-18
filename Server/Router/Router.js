@@ -12,7 +12,7 @@ Router.post('/register',RegisterUserHandler);
 Router.post('/login',LoginUserHandler);
 Router.get('/user_Details',User_Details);
 Router.post('/fileUpload',upload.single('File'),FileUploadhandler);
-Router.post('/checkFileIntegrity',CheckFileIntegrity);
+Router.post('/checkFileIntegrity',upload.single('File'),CheckFileIntegrity);
 Router.get('/ViewAllFiles',ViewAllFileHandler);
 
 module.exports = Router;

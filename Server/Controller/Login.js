@@ -37,7 +37,8 @@ const cookieOptions ={
 }
   return res.cookie("token",token,cookieOptions).status(200).json({
     message: 'login successful',
-    token:token
+    token:token,
+    success:true
   })
 } catch (error) {
     return res.status(404).json({

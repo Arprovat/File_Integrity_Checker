@@ -7,7 +7,10 @@ require('dotenv').config()
 const DB_connection = require('./conection&config/db_config.js')
 
 const port = 8008
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials:true,
+}));
 app.use(express.json());
 app.use(cookieParser())
 app.use('/api',Router);
