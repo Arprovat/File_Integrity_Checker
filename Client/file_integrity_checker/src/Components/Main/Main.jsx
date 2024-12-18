@@ -3,7 +3,7 @@ import Navbar from '../Navbar/Navbar';
 
 const Main = () => {
     return (
-        <div>
+        <div className='mx-6'>
             <Navbar></Navbar>
             <Outlet></Outlet>
         </div>

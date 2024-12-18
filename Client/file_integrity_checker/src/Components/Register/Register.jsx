@@ -2,13 +2,24 @@ import { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import login from '../../assets/login.jpg'
 import { Link } from "react-router-dom";
+import axios from "axios";
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [Name, setName] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
-        // Implement login logic here
+        const payload = {
+            Username: Name,
+            email,password
+        }
+        const response =await axios.post('http://localhost:8008/api/register', payload,{
+            withCredentials: true,
+        })
+        if(response){
+            console.log(response.data.message);
+        }
         console.log('Login attempt:', { email, password });
     };
 
@@ -32,8 +43,8 @@ const Register = () => {
                                     className='w-full p-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#002D74]'
                                     type="name"
                                     id="name"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={Name}
+                                    onChange={(e) => setName(e.target.value)}
                                     placeholder='Enter Name ...'
                                     required
                                 />

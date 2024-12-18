@@ -34,7 +34,7 @@ useEffect(()=>{
         withCredentials:true
         })
         console.log(results)
-      setIntegrityMessage('File successfully posted. Ready for integrity check.');
+      setIntegrityMessage(results.data.message);
     } else {
       setIntegrityMessage('Please upload a file first.');
     }
@@ -48,15 +48,15 @@ useEffect(()=>{
       const results = await axios.post('http://localhost:8008/api/checkFileIntegrity',formdata,{
       withCredentials:true
       })
-      console.log(results)
-      setIntegrityMessage('Integrity check completed. File is authentic.');
+      if(results)
+      {setIntegrityMessage(results.data.message);}
     } else {
       setIntegrityMessage('Please upload and post a file first.');
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-md mx-auto mt-6 border-2 bg-white shadow-lg rounded-lg">
       <div className="flex items-center justify-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800 flex items-center">
           <Shield className="mr-2 text-blue-500" />
@@ -113,7 +113,7 @@ useEffect(()=>{
 
       {integrityMessage && (
         <div className={`p-4 rounded-lg text-center ${
-          integrityMessage.includes('authentic') || integrityMessage.includes('posted') 
+          integrityMessage.includes('authentic') || integrityMessage.includes('uploaded') 
             ? 'bg-green-100 text-green-800' 
             : 'bg-red-100 text-red-800'
         }`}>
